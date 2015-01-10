@@ -46,7 +46,7 @@ function loadAlbum(albumName, callback) {
                 if(index == files.length) {
                     var obj = {
                         short_name: albumName,
-                        photos: files
+                        photos: retFiles
                     };
                     callback(null, obj);
                 }
