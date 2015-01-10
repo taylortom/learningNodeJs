@@ -56,7 +56,7 @@ function loadAlbum(albumName, callback) {
                             callback(makeError("file_error", JSON.stringify(err)));
                         }
                         else {
-                            if(stats.isFile()) {
+                            if(stats.isFile() && (files[index].charAt(0) !== ".")) {
                                 var obj = {
                                     filename: files[index],
                                     desc: files[index]
