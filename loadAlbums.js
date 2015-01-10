@@ -7,7 +7,23 @@ function loadAlbumList(callback) {
             console.log(err);
         }
         else {
-            callback(null, files);
+            var dirs = [];
+            (function iterator(index) {
+                if(index == files.length) {
+                    callback(null, dirs);
+                }
+                else {
+                    fs.stat("albums/" + files[index], function(err, stats) {
+                        if(err) {
+                            callback(err);
+                        }
+                        else {
+                            if(stats.isDirectory()) dirs.push(files[index]);
+                        }
+                        iterator(index+1);
+                    });
+                }
+            })(0);
         }
     });
 }
