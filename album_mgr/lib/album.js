@@ -22,8 +22,7 @@ Album.prototype.photos = function(callback) {
                 else callback({ error:"file_error", message:JSON.stringify(err) });
             }
             else {
-                var onlyFiles = []
-
+                var onlyFiles = [];
                 (function iterator(index) {
                     if(index == files.length) {
                         self._photos = onlyFiles;
