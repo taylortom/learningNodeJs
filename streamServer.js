@@ -14,20 +14,20 @@ function handleIncomingRequest(req, res) {
 }
 
 function serveStaticFile(filename, res) {
-    var rs = fs.createReadStream(filename);
-    var ct = contentTypeForPath(filename);
+    fs.exists(filename, function(exists) {
+        if(!exists) {
+            outputError(filename, res);
+        }
+        else {
+            var rs = fs.createReadStream(filename);
 
-    res.writeHead(200, { "Content-Type": ct });
+            rs.on("error", function(err) {
+                res.end();
+            });
 
-    rs.on("readable", function() {
-        var data = rs.read();
-        if(data) res.write(data);
-    });
-    rs.on("error", function(err) {
-        outputError(filename, res);
-    });
-    rs.on("end", function() {
-        res.end();
+            res.writeHead(200, { "Content-Type": contentTypeForPath(filename) });
+            rs.pipe(res);
+        }
     });
 }
 
@@ -36,12 +36,12 @@ function contentTypeForPath(path) {
     switch(ext) {
         case "html":
             return "text/html";
-        case "js"
+        case "js":
             return "text/javascript";
-        case "css"
+        case "css":
             return "text/css";
-        case "jpg"
-        case "jpeg"
+        case "jpg":
+        case "jpeg":
             return "image/jpeg";
         default:
             return "text/plain";
