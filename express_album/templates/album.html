@@ -1,0 +1,14 @@
+<div class="album-page">
+    <p>There are {{photos.length}} photos in this album.</p>
+    <div class="photos">
+    {{#each photos}}
+            <div class="photo">
+                <div class="photo-holder">
+                    <img class="photo" src="{{url}}">
+                </div>
+                <p>{{desc}}</p>
+            </div>
+        <div class="clearfix"></div>
+    {{/each}}
+    </div>
+</div>
