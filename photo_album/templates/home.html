@@ -1,0 +1,10 @@
+<div class="album-list">
+    <p>There are {{ albums.length }} albums</p>
+    <ul class="albums">
+        {{#each albums}}
+            <li class="album"><a href="http://localhost:8080/pages/album/{{this}}">{{this}}</a></li>
+        {{else}}
+            <li>Sorry, there are no albums</li>
+        {{/each}}
+    </ul>
+</div>
