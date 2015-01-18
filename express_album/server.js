@@ -7,10 +7,10 @@ var app = express();
 var encoding = "utf8";
 
 // routes
-app.get("/albums.json", handleListAlbums);
-app.get("/albums/:albumName.json", handleGetAlbum);
-app.get("/albums/:albumName/:filename", function(req, res) {
-    serveStaticFile(req.url.substring(1), res);
+app.get("/v1/albums.json", handleListAlbums);
+app.get("/v1/albums/:albumName.json", handleGetAlbum);
+app.get("/v1/albums/:albumName/:filename", function(req, res) {
+    serveStaticFile(req.url.substring(4), res);
 });
 app.get("/content/:filename", function(req, res) {
     serveStaticFile("content/" + req.params.filename, res);
@@ -25,7 +25,6 @@ app.get("*", function(req, res) {
 });
 
 function serveStaticFile(filename, res) {
-    console.log(filename);
     fs.exists(filename, function(exists) {
         if(!exists) {
             sendFailure(res, 404, invalidResource());
@@ -81,14 +80,14 @@ function loadAlbumList(callback) {
 }
 
 function loadAlbum(albumName, page, pageSize, callback) {
-    fs.readdir("albums/" + albumName, function(err, files) {
+    var path = "albums/" + albumName + "/";
+    fs.readdir(path, function(err, files) {
         if(err) {
             if(err.code == "ENOENT") callback(noSuchAlbum());
             else callback(makeError("file_error", JSON.stringify(err)));
         }
         else {
             var retFiles = [];
-            var path = "albums/" + albumName + "/";
             (function iterator(index) {
                 if(index == files.length) {
                     var sf = retFiles.splice(page*pageSize, pageSize);

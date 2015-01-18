@@ -4,12 +4,11 @@ $(function(){
     var templateData = {};
 
     var initPage = function() {
-        console.log("home.initPage");
         $.get("/templates/home.html", function(data) {
             template = data;
         });
 
-        $.getJSON("/albums.json", function(data) {
+        $.getJSON("/v1/albums.json", function(data) {
             $.extend(templateData, data.data);
         });
 

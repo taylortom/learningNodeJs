@@ -10,7 +10,7 @@ $(function(){
             template = data;
         });
 
-        $.getJSON("/albums/" + albumName + ".json", function(data) {
+        $.getJSON("/v1/albums/" + albumName + ".json", function(data) {
             $.extend(templateData, getPhotoData(data));
         });
 
@@ -27,7 +27,7 @@ $(function(){
         var af = data.data.albumData;
 
         for(var i = 0, count = af.photos.length; i < count; i++) {
-            var url = "/albums/" + af.short_name + "/" + af.photos[i].filename;
+            var url = "/v1/albums/" + af.short_name + "/" + af.photos[i].filename;
             obj.photos.push({ url: url, desc: af.photos[i].filename });
         }
 
