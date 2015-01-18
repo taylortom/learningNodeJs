@@ -1,8 +1,10 @@
 var fs = require("fs");
 var helpers = require("../helpers.js");
 
+var STATIC_DIR = "../static/albums/";
+
 function loadAlbumList(callback) {
-    fs.readdir("albums/", function(err, files) {
+    fs.readdir(STATIC_DIR, function(err, files) {
         if(err) {
             callback(helpers.makeError("file_error", JSON.stringify(err)));
         }
@@ -13,7 +15,7 @@ function loadAlbumList(callback) {
                     callback(null, dirs);
                 }
                 else {
-                    fs.stat("albums/" + files[index], function(err, stats) {
+                    fs.stat(STATIC_DIR + files[index], function(err, stats) {
                         if(err) {
                             callback(err);
                         }
@@ -29,7 +31,7 @@ function loadAlbumList(callback) {
 }
 
 function loadAlbum(albumName, page, pageSize, callback) {
-    var path = "albums/" + albumName + "/";
+    var path = STATIC_DIR + albumName + "/";
     fs.readdir(path, function(err, files) {
         if(err) {
             if(err.code == "ENOENT") callback(helpers.invalidResource());

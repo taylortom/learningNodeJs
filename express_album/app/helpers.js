@@ -19,5 +19,5 @@ exports.makeError = function(err, msg) {
 }
 
 exports.invalidResource = function() {
-    return makeError("invalid_resource", "the requested resource does not exist");
+    return exports.makeError("invalid_resource", "the requested resource does not exist");
 }

@@ -27,7 +27,7 @@ $(function(){
         var af = data.data.albumData;
 
         for(var i = 0, count = af.photos.length; i < count; i++) {
-            var url = "/v1/albums/" + af.short_name + "/" + af.photos[i].filename;
+            var url = "/albums/" + af.short_name + "/" + af.photos[i].filename;
             obj.photos.push({ url: url, desc: af.photos[i].filename });
         }
 
